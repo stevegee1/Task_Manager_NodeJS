@@ -1,14 +1,30 @@
-const express= require ("express")
-const app= express()
+const express = require("express");
+const app = express();
+require("dotenv").config();
+const connecting = require("./db/connect");
 // setting up routes
-const tasks= require("./routes/tasks.js")
+const tasks = require("./routes/tasks.js");
 
-const port = 50000
+const connectionString = `mongodb+srv://steve:${process.env.password}@nodeexpressjs.qoawcx2.mongodb.net/Task_Manager?retryWrites=true&w=majority`;
+
+const port = 50000;
 // setting up middleware functions
 
-  app.use(express.json())
-  app.use("/api/v/tasks",tasks)
+app.use(express.json());
+app.use("/api/v/tasks", tasks);
 
-
+const connectedDB = async () => {
+  try {
+    await connecting(connectionString);
+    console.log("connected")
+ 
+      app.listen(port, console.log(`app listening on port ${port}`));
+    
+    
+  } catch (error) {
+  console.log(error)
+  }
+  
+};
+connectedDB()
 //app.get("/", tasks)
-app.listen(port, console.log(`app listening on port ${port}`))

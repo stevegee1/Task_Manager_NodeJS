@@ -1,1 +1,11 @@
-const connectionString= `mongodb+srv://steve:<password>@nodeexpressjs.qoawcx2.mongodb.net/?retryWrites=true&w=majority`
+require("dotenv").config()
+const mongoose= require("mongoose")
+mongoose.set('strictQuery', false)
+
+
+const connectDB= (url)=>{
+   return mongoose.connect(url);   
+
+}
+
+module.exports=connectDB
