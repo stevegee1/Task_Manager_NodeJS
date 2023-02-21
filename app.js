@@ -4,8 +4,9 @@ require("dotenv").config();
 const connecting = require("./db/connect");
 // setting up routes
 const tasks = require("./routes/tasks.js");
+const TaskInterface = require("./Models/Tasks")
 
-const connectionString = `mongodb+srv://steve:${process.env.password}@nodeexpressjs.qoawcx2.mongodb.net/Task_Manager?retryWrites=true&w=majority`;
+const connectionString = `mongodb+srv://steve:${process.env.password}@nodeexpressjs.qoawcx2.mongodb.net/task_manager?retryWrites=true&w=majority`;
 
 const port = 50000;
 // setting up middleware functions
