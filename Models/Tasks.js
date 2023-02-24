@@ -1,3 +1,5 @@
+//this module defines the schema for our documents in mongoDB and export the mode
+
 const mongoose= require("mongoose")
 
 const TaskSchema= new mongoose.Schema({
@@ -13,4 +15,4 @@ const TaskSchema= new mongoose.Schema({
     }
 })
 
-module.exports= mongoose.model("Task",TaskSchema)
+module.exports= mongoose.model("Boy",TaskSchema)

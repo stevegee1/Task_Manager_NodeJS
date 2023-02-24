@@ -4,10 +4,11 @@ require("dotenv").config();
 const connecting = require("./db/connect");
 // setting up routes
 const tasks = require("./routes/tasks.js");
-const TaskInterface = require("./Models/Tasks")
-const notFound= require("./middleware/not-found")
-const errorHandlerMiddleware= require("./middleware/errorHandler")
+const TaskInterface = require("./Models/Tasks");
+const notFound = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/errorHandler");
 
+//This is the connection string to a particular database in MongoDB
 const connectionString = `mongodb+srv://steve:${process.env.password}@nodeexpressjs.qoawcx2.mongodb.net/task_manager?retryWrites=true&w=majority`;
 
 const port = 50000;
@@ -15,21 +16,19 @@ const port = 50000;
 
 app.use(express.json());
 app.use("/api/v/tasks", tasks);
-app.use(notFound)
-app.use(errorHandlerMiddleware)
+app.use(notFound);
+app.use(errorHandlerMiddleware);
 
+//this function connects our app to MongoDB 
 const connectedDB = async () => {
   try {
     await connecting(connectionString);
-    console.log("connected")
- 
-      app.listen(port, console.log(`app listening on port ${port}`));
-    
-    
+    console.log("connected");
+
+    app.listen(port, console.log(`app listening on port ${port}`));
   } catch (error) {
-  console.log(error)
+    console.log(error);
   }
-  
 };
-connectedDB()
+connectedDB();
 //app.get("/", tasks)
