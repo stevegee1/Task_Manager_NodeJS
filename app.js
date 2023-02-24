@@ -11,7 +11,7 @@ const errorHandlerMiddleware = require("./middleware/errorHandler");
 //This is the connection string to a particular database in MongoDB
 const connectionString = `mongodb+srv://steve:${process.env.password}@nodeexpressjs.qoawcx2.mongodb.net/task_manager?retryWrites=true&w=majority`;
 
-const port = 50000;
+const port = process.env.PORT || 50000;
 // setting up middleware functions
 
 app.use(express.json());

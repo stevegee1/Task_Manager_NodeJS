@@ -2,6 +2,7 @@
 
 const task = require("../Models/Tasks"); //  Instance of this model is a document in MongoDB
 const asyncWrapper = require("../middleware/async"); // to handle asynchronous functions
+const { createCustomError } = require("../error/error");
 
 //getAllTasks- fetches all the documents saved in our mongoDB>>collection(GET method)
 const getAllTasks = asyncWrapper(async (req, res) => {
@@ -15,15 +16,14 @@ const getAllTasks = asyncWrapper(async (req, res) => {
 
 const getTasks = asyncWrapper(async (req, res, next) => {
   const { id: taskID } = req.params;
-  const findOne = await task.findOne({_id:taskID})
+  const findOne = await task.findOne({ _id: taskID });
   console.log(findOne);
   if (!findOne) {
-    const error = new Error("Not Found");
-    error.status = 404;
+    const error = createCustomError("id not found", 404);
     return next(error);
     //return res.status(404).json({ msg: "id not found" });
   }
-  res.status(200).json({ nbHits: findOne.length });
+  res.status(200).json({message: findOne});
 });
 
 //createTasks- creates a single document using POST method
@@ -43,8 +43,7 @@ const updateTasks = asyncWrapper(async (req, res, next) => {
   });
   console.log(updateTask);
   if (!updateTask) {
-    const error = new Error("not found buddy");
-    error.statusCode = 400;
+    const error = createCustomError("id not found", 404);
     return next(error);
   }
 
@@ -59,7 +58,8 @@ const deleteTasks = asyncWrapper(async (req, res) => {
   const deleteTask = await task.findOneAndDelete({ _id: taskID });
   console.log(deleteTask);
   if (!deleteTask) {
-    return res.status(404).json({ msg: "id not found" });
+    const error = createCustomError("id not found", 404);
+    return next(error);
   }
   res.status(200).json({ deleteTask });
 });
@@ -73,6 +73,10 @@ const editTasks = asyncWrapper(async (req, res) => {
     overwrite: true,
   });
   console.log(task_edit);
+  if (!task_edit) {
+    const error = createCustomError("id not found", 404);
+    return next(error);
+  }
   res.status(200).json({ msg: "success" });
 });
 
