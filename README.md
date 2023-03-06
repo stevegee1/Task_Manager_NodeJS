@@ -7,3 +7,6 @@ This NodeJS application covers the **CRUD** operation
 * D- Delete a task
 
 ## START
+
+`Git clone app`
+`npm start`
