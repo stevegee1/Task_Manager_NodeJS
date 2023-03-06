@@ -8,5 +8,5 @@ This NodeJS application covers the **CRUD** operation
 
 ## START
 
-`Git clone app`
-`npm start`
+* `Git clone app`
+* `npm start`
